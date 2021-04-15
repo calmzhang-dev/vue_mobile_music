@@ -9,9 +9,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'm-header'
-  }
+export default {
+  name: 'm-header'
+}
 </script>
 
 <style lang="scss" scoped>
