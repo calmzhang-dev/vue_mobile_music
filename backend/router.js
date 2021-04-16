@@ -216,7 +216,7 @@ function registerSingerList(app) {
   app.get('/api/getSingerList', (req, res) => {
     const url = 'https://u.y.qq.com/cgi-bin/musics.fcg'
     const HOT_NAME = '热'
-
+    // data参数
     const data = JSON.stringify({
       comm: { ct: 24, cv: 0 },
       singerList: {

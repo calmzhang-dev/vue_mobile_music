@@ -7,7 +7,7 @@ const relativeCls = 'g-relative'
 const loadingDirective = {
   // 这里的el是绑定到的元素,binding是参数
   mounted (el, binding) {
-    console.log(el.classList)
+    console.log(binding)
     // 引入vue,实例化创建一个api,loading为根组件
     const app = createApp(Loading)
     // 将组建挂载到html,这里挂载到创建的api,(但是这里挂载创建的dom元素,实际并没有挂载到实际的dom层上)
