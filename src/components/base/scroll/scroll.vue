@@ -10,11 +10,25 @@ import useScroll from './use-scroll'
 import { ref } from 'vue'
 export default {
   name: 'scroll',
-  setup (prop) {
+  props: {
+    click: {
+      type: Boolean,
+      defalt: true
+    },
+    probeType: {
+      type: Number,
+      default: 0
+    }
+  },
+  // 自定义事件vue3.0写法
+  emits: ['scroll'],
+  setup (props, { emit }) {
     const rootRef = ref(null)
-    useScroll(rootRef, prop)
+    const scroll = useScroll(rootRef, props, emit)
+
     return {
-      rootRef
+      rootRef,
+      scroll
     }
   }
 }

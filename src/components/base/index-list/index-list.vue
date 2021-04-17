@@ -69,11 +69,14 @@ export default {
   },
   emits: ['select'],
   setup (props, { emit }) {
+    // 分类标题
     const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(props)
+    // 快速导航
     const { shortcutList, scrollRef, onShortcutTouchStart, onShortcutTouchMove } = useShortcut(props, groupRef)
     function onItemClick (item) {
       emit('select', item)
     }
+    console.log(fixedTitle)
     return {
       onItemClick,
       // fixed

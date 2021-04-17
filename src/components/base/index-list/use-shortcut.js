@@ -5,6 +5,7 @@ export default function useShortcut (props, groupRef) {
   const scrollRef = ref(null)
 
   const shortcutList = computed(() => {
+    // console.log(props.data)
     return props.data.map((group) => {
       return group.title
     })
