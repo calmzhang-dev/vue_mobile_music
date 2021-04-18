@@ -41,14 +41,15 @@ function append (el) {
   if (['absolute', 'fixed', 'reactive'].indexOf(style.position) === -1) {
     debugger
     addClass(el, relativeCls)
-    console.log(el.classList)
   }
   el.appendChild(el.instance.$el)
 }
 
 function remove (el) {
   removeClass(el, relativeCls)
-  el.removeChild(el.instance.$el)
+  if (document.body.contains(el.instance.$el)) {
+    el.removeChild(el.instance.$el)
+  }
 }
 
 export default loadingDirective

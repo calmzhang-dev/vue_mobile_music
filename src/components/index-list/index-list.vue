@@ -4,6 +4,7 @@
     :probe-type="3"
     @scroll="onScroll"
     ref="scrollRef"
+    :click="true"
   >
     <ul ref="groupRef">
       <li
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-import Scroll from '@/components/base/scroll/scroll'
+import Scroll from '@/components/wrap-scroll/index'
 import useFixed from './use-fixed'
 import useShortcut from './use-shortcut'
 export default {
@@ -62,21 +63,18 @@ export default {
   props: {
     data: {
       type: Array,
-      default  () {
+      default () {
         return []
       }
     }
   },
   emits: ['select'],
   setup (props, { emit }) {
-    // 分类标题
     const { groupRef, onScroll, fixedTitle, fixedStyle, currentIndex } = useFixed(props)
-    // 快速导航
     const { shortcutList, scrollRef, onShortcutTouchStart, onShortcutTouchMove } = useShortcut(props, groupRef)
     function onItemClick (item) {
       emit('select', item)
     }
-    console.log(fixedTitle)
     return {
       onItemClick,
       // fixed

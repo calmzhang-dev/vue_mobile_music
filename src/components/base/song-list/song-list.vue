@@ -18,39 +18,39 @@
 </template>
 
 <script>
-  export default {
-    name: 'song-list',
-    props: {
-      songs: {
-        type: Array,
-        default() {
-          return []
-        }
-      },
-      rank: Boolean
+export default {
+  name: 'song-list',
+  props: {
+    songs: {
+      type: Array,
+      default () {
+        return []
+      }
     },
-    emits: ['select'],
-    methods: {
-      getDesc(song) {
-        return `${song.singer}·${song.album}`
-      },
-      selectItem(song, index) {
-        this.$emit('select', { song, index })
-      },
-      getRankCls(index) {
-        if (index <= 2) {
-          return `icon icon${index}`
-        } else {
-          return 'text'
-        }
-      },
-      getRankText(index) {
-        if (index > 2) {
-          return index + 1
-        }
+    rank: Boolean
+  },
+  emits: ['select'],
+  methods: {
+    getDesc (song) {
+      return `${song.singer}·${song.album}`
+    },
+    selectItem (song, index) {
+      this.$emit('select', { song, index })
+    },
+    getRankCls (index) {
+      if (index <= 2) {
+        return `icon icon${index}`
+      } else {
+        return 'text'
+      }
+    },
+    getRankText (index) {
+      if (index > 2) {
+        return index + 1
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
