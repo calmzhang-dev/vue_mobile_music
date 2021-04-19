@@ -1,16 +1,18 @@
 import { PLAY_MODE } from '@/assets/js/constant'
 import { shuffle } from '@/assets/js/util'
 
-export function selectPlay({ commit }, { list, index }) {
-  commit('setPlayMode', PLAY_MODE.sequence)
-  commit('setSequenceList', list)
+// 选择播放谁的音乐列表
+export function selectPlay ({ commit }, { list, index }) {
+  commit('setPlayMode', PLAY_MODE.sequence) // 播放方式
+  commit('setSequenceList', list) // 顺序列表
   commit('setPlayingState', true)
   commit('setFullScreen', true)
   commit('setPlaylist', list)
   commit('setCurrentIndex', index)
 }
 
-export function randomPlay({ commit }, list) {
+// 随机播放
+export function randomPlay ({ commit }, list) {
   commit('setPlayMode', PLAY_MODE.random)
   commit('setSequenceList', list)
   commit('setPlayingState', true)
@@ -19,7 +21,7 @@ export function randomPlay({ commit }, list) {
   commit('setCurrentIndex', 0)
 }
 
-export function changeMode({ commit, state, getters }, mode) {
+export function changeMode ({ commit, state, getters }, mode) {
   const currentId = getters.currentSong.id
   if (mode === PLAY_MODE.random) {
     commit('setPlaylist', shuffle(state.sequenceList))
@@ -34,7 +36,7 @@ export function changeMode({ commit, state, getters }, mode) {
   commit('setPlayMode', mode)
 }
 
-export function removeSong({ commit, state }, song) {
+export function removeSong ({ commit, state }, song) {
   const sequenceList = state.sequenceList.slice()
   const playlist = state.playlist.slice()
 
@@ -60,14 +62,14 @@ export function removeSong({ commit, state }, song) {
   }
 }
 
-export function clearSongList({ commit }) {
+export function clearSongList ({ commit }) {
   commit('setSequenceList', [])
   commit('setPlaylist', [])
   commit('setCurrentIndex', 0)
   commit('setPlayingState', false)
 }
 
-export function addSong({ commit, state }, song) {
+export function addSong ({ commit, state }, song) {
   const playlist = state.playlist.slice()
   const sequenceList = state.sequenceList.slice()
   let currentIndex = state.currentIndex
@@ -79,7 +81,6 @@ export function addSong({ commit, state }, song) {
     playlist.push(song)
     currentIndex = playlist.length - 1
   }
-
   const sequenceIndex = findIndex(sequenceList, song)
   if (sequenceIndex === -1) {
     sequenceList.push(song)
@@ -92,7 +93,7 @@ export function addSong({ commit, state }, song) {
   commit('setFullScreen', true)
 }
 
-function findIndex(list, song) {
+function findIndex (list, song) {
   return list.findIndex((item) => {
     return item.id === song.id
   })

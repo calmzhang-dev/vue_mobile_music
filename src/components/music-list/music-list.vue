@@ -1,5 +1,6 @@
 <template>
   <div class="music-list">
+    <!-- 头部以及图片 -->
     <div
       class="back"
       @click="goBack"
@@ -8,18 +9,32 @@
     </div>
     <h1 class="title">{{ title }}</h1>
     <div class="bg-image" :style="bgImageStyle" ref="bgImage">
+    <div class="play-btn-wrapper" :style="playBtnStyle" >
+        <div
+          v-show="songs.length > 0"
+          class="play-btn"
+          @click="random"
+        >
+          <i class="icon-play"></i>
+          <span class="text">随机播放全部</span>
+        </div>
+      </div>
         <div class="filter" :style="filterStyle"></div>
     </div>
+    <!-- 歌曲列表 -->
     <scroll
       class="list"
       :style="scrollStyle"
       v-loading="loading"
+      v-no-result:[noresultText]="onResult"
       :probe-type="3"
       @scroll="onScroll"
+      :click="true"
     >
       <div class="song-list-wrapper">
         <song-list
           :songs="songs"
+          @select="selectItem"
         ></song-list>
       </div>
     </scroll>
@@ -29,6 +44,8 @@
 <script>
 import SongList from '@/components/base/song-list/song-list'
 import Scroll from '@/components/base/scroll/scroll'
+// 派发vuex数据利用Actions
+import { mapActions } from 'vuex'
 
 const RESERVED_HEIGHT = 40
 
@@ -47,7 +64,11 @@ export default {
     },
     title: String,
     pic: String,
-    loading: Boolean
+    loading: Boolean,
+    noresultText: {
+      type: String,
+      default: '抱歉,没有找到歌曲'
+    }
   },
   data () {
     return {
@@ -84,6 +105,16 @@ export default {
       }
     },
 
+    playBtnStyle () {
+      let display = ''
+      if (this.scrollY >= this.maxTranslateY) {
+        display = 'none'
+      }
+      return {
+        display
+      }
+    },
+
     // 根据图片计算歌曲列表定位高度
     scrollStyle () {
       return {
@@ -103,6 +134,10 @@ export default {
       return {
         backdropFilter: `blur(${blur}px)`
       }
+    },
+
+    onResult () {
+      return !this.loading && !this.songs.length
     }
   },
   mounted () {
@@ -110,11 +145,24 @@ export default {
     this.maxTranslateY = this.imageHeight - RESERVED_HEIGHT
   },
   methods: {
+    ...mapActions([
+      'selectPlay',
+      'randomPlay'
+    ]),
+    selectItem ({ song, index }) {
+      this.selectPlay({
+        list: this.songs,
+        index
+      })
+    },
     goBack () {
       this.$router.back()
     },
     onScroll (pos) {
       this.scrollY = -pos.y
+    },
+    random () {
+      this.randomPlay(this.songs)
     }
   }
 }
