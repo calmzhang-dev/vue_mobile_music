@@ -1,5 +1,6 @@
 <template>
   <ul class="song-list">
+    <!-- songs  所有歌曲 -->
     <li
       class="item"
       v-for="(song, index) in songs"
