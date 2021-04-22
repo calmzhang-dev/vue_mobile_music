@@ -6,17 +6,16 @@ export function shuffle (source) {
   }
   return arr
 }
-
 function getRandomInt (max) {
   return Math.floor(Math.random() * (max + 1))
 }
-
 function swap (arr, i, j) {
   const t = arr[i]
   arr[i] = arr[j]
   arr[j] = t
 }
 
+// 格式化歌曲时间
 export function formatTime (interval) {
   interval = interval | 0
   const minute = ((interval / 60 | 0) + '').padStart(2, '0')

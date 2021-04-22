@@ -1,6 +1,7 @@
 import storage from 'good-storage'
 
-function insertArray (arr, val, compare, maxLen) {
+// 添加收藏歌曲
+function insertArray (arr, item, compare, maxLen) {
   const index = arr.findIndex(compare)
   if (index === 0) {
     return
@@ -8,12 +9,13 @@ function insertArray (arr, val, compare, maxLen) {
   if (index > 0) {
     arr.splice(index, 1)
   }
-  arr.unshift(val)
+  arr.unshift(item)
   if (maxLen && arr.length > maxLen) {
     arr.pop()
   }
 }
 
+// 删除收藏歌曲
 function deleteFromArray (arr, compare) {
   const index = arr.findIndex(compare)
   if (index > -1) {
