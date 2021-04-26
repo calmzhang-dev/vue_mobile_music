@@ -8,7 +8,7 @@ export default function useMiddleInteractive () {
   const touch = {}
 
   function onMiddleTouchStart (e) {
-    touch
+
   }
   function onMiddleTouchMove () {
 
