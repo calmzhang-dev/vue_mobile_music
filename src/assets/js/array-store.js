@@ -3,11 +3,8 @@ import storage from 'good-storage'
 // 添加收藏歌曲
 function insertArray (arr, item, compare, maxLen) {
   const index = arr.findIndex(compare)
-  if (index === 0) {
+  if (index > -1) {
     return
-  }
-  if (index > 0) {
-    arr.splice(index, 1)
   }
   arr.unshift(item)
   if (maxLen && arr.length > maxLen) {
