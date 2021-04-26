@@ -8,6 +8,8 @@ import Lyric from 'lyric-parser'
 export default function useLyric ({ songReady, currentTime }) {
   const currentLyric = ref(null)
   const currentLineNum = ref(0)
+  const pureMusicLyric = ref('')
+  const playinglyric = ref('')
   const lyricScrollRef = ref(null)
   const lyricListRef = ref(null)
 
@@ -19,8 +21,12 @@ export default function useLyric ({ songReady, currentTime }) {
     if (!newSong.url || !newSong.id) {
       return
     }
+    // 暂停和删除上一次播放歌词
     stopLyric()
     currentLyric.value = null
+    currentLineNum.value = 0
+    playinglyric.value = ''
+    pureMusicLyric.value = ''
 
     // 请求歌词
     const lyric = await getLyric(newSong)
@@ -36,9 +42,14 @@ export default function useLyric ({ songReady, currentTime }) {
     }
     // 解析歌词
     currentLyric.value = new Lyric(lyric, handleLyric)
-    // 歌曲准备好
-    if (songReady.value) {
-      playLyric()
+    const hasLyric = currentLyric.value.lines.length
+    if (hasLyric) {
+      // 歌曲准备好
+      if (songReady.value) {
+        playLyric()
+      }
+    } else {
+      playinglyric.value = pureMusicLyric.value = lyric.replace(/\[(\d{2}):(\d{2}):(\d{2})\]/g, '')
     }
   })
 
@@ -57,9 +68,10 @@ export default function useLyric ({ songReady, currentTime }) {
   }
 
   // 每行歌词都会执行handleLyric函数
-  function handleLyric ({ lineNum }) {
+  function handleLyric ({ lineNum, txt }) {
     currentLineNum.value = lineNum
     const scrollComp = lyricScrollRef.value
+    playinglyric.value = txt
     const listEl = lyricListRef.value
     if (!listEl) {
       return
@@ -75,9 +87,11 @@ export default function useLyric ({ songReady, currentTime }) {
   return {
     currentLyric,
     currentLineNum,
+    pureMusicLyric,
     playLyric,
     lyricScrollRef,
     lyricListRef,
-    stopLyric
+    stopLyric,
+    playinglyric
   }
 }

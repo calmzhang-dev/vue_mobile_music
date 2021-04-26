@@ -19,36 +19,29 @@
           <h2 class="subtitle">{{currentSong.singer}}</h2>
         </div>
         <!-- 中间 -->
-        <div class="middle">
-          <div class="middle-l" style="display: none">
+        <div 
+          class="middle"
+          @touchstart.prevent="onMiddleTouchStart"
+          @touchmove.prevent="onMiddleTouchMove"
+          @touchend.prevent="onMiddleTouchEnd"
+        >
+          <div class="middle-l" :style="middleLStyle">
             <div class="cd-wrapper">
-              <div
-                class="cd"
-                ref="cdRef"
-              >
-                <img
-                  :src="currentSong.pic"
-                  class="image"
-                  :class="cdClass"
-                  ref="cdImageRef"
-                >
+              <div class="cd" ref="cdRef" >
+                <img :src="currentSong.pic" class="image" :class="cdClass" ref="cdImageRef" >
+              </div>
+            </div>
+            <div class="playing-lyric-wrapper">
+              <div class="playing-lyric">
+                {{playinglyric}}
               </div>
             </div>
           </div>
           <!-- 歌词 -->
-          <scroll
-            class="middle-r"
-            ref="lyricScrollRef"
-            :style="middleRStyle"
-          >
+          <scroll class="middle-r" ref="lyricScrollRef" :style="middleRStyle">
             <div class="lyric-wrapper">
               <div v-if="currentLyric" ref="lyricListRef">
-                <p
-                  class="text"
-                  :class="{'current': currentLineNum ===index}"
-                  v-for="(line,index) in currentLyric.lines"
-                  :key="line.num"
-                >
+                <p class="text" :class="{'current': currentLineNum ===index}" v-for="(line,index) in currentLyric.lines" :key="line.num" >
                   {{line.txt}}
                 </p>
               </div>
@@ -59,6 +52,10 @@
           </scroll>
         </div>
         <div class="bottom">
+          <div class="dot-wrapper">
+            <span :class="{'active': currentShow === 'cd'}"></span>
+            <span :class="{'active': currentShow === 'lyric'}"></span>
+          </div>
           <!-- 进度条 -->
           <div class="progress-wrapper">
             <span class="time time-l">{{formatTime(currentTime)}}</span>
@@ -144,7 +141,7 @@ export default {
     const { modeIcon, changeMode } = useMode()
     const { getFavoriteIcon, toggleFavorite } = useFavorite()
     const { cdClass, cdRef, cdImageRef } = useCD()
-    const { currentLyric, currentLineNum, playLyric, lyricScrollRef, lyricListRef, stopLyric } = useLyric({ songReady, currentTime })
+    const { currentLyric, currentLineNum, playLyric, lyricScrollRef, lyricListRef, stopLyric, pureMusicLyric, playinglyric } = useLyric({ songReady, currentTime })
     // computed===============
     // 暂停按钮
     const playIcon = computed(() => {
@@ -334,7 +331,9 @@ export default {
       currentLineNum,
       lyricScrollRef,
       lyricListRef,
-      playLyric
+      playLyric,
+      pureMusicLyric,
+      playinglyric
     }
   }
 }
