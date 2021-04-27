@@ -21,7 +21,8 @@ export default function useLyric ({ songReady, currentTime }) {
     if (!newSong.url || !newSong.id) {
       return
     }
-    // 暂停和删除上一次播放歌词
+
+    // 暂停和删除上一次播放歌词(解决歌词跳动bug)
     stopLyric()
     currentLyric.value = null
     currentLineNum.value = 0

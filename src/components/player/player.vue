@@ -19,7 +19,7 @@
           <h2 class="subtitle">{{currentSong.singer}}</h2>
         </div>
         <!-- 中间 -->
-        <div 
+        <div
           class="middle"
           @touchstart.prevent="onMiddleTouchStart"
           @touchmove.prevent="onMiddleTouchMove"
@@ -53,8 +53,8 @@
         </div>
         <div class="bottom">
           <div class="dot-wrapper">
-            <span :class="{'active': currentShow === 'cd'}"></span>
-            <span :class="{'active': currentShow === 'lyric'}"></span>
+            <span class="dot" :class="{'active': currentShow === 'cd'}"></span>
+            <span class="dot" :class="{'active': currentShow === 'lyric'}"></span>
           </div>
           <!-- 进度条 -->
           <div class="progress-wrapper">
@@ -111,6 +111,7 @@ import ProgressBar from './progress-bar'
 import Scroll from '../base/scroll/scroll.vue'
 import { formatTime } from '@/assets/js/util'
 import { PLAY_MODE } from '@/assets/js/constant'
+import useMiddleInteractive from './use-middle-interactive'
 
 export default {
   name: 'player',
@@ -142,6 +143,8 @@ export default {
     const { getFavoriteIcon, toggleFavorite } = useFavorite()
     const { cdClass, cdRef, cdImageRef } = useCD()
     const { currentLyric, currentLineNum, playLyric, lyricScrollRef, lyricListRef, stopLyric, pureMusicLyric, playinglyric } = useLyric({ songReady, currentTime })
+    const { currentShow, middleLStyle, middleRStyle, onMiddleTouchEnd, onMiddleTouchMove, onMiddleTouchStart } = useMiddleInteractive()
+
     // computed===============
     // 暂停按钮
     const playIcon = computed(() => {
@@ -333,7 +336,14 @@ export default {
       lyricListRef,
       playLyric,
       pureMusicLyric,
-      playinglyric
+      playinglyric,
+      // use-Middle-Interactive
+      currentShow,
+      middleLStyle,
+      middleRStyle,
+      onMiddleTouchEnd,
+      onMiddleTouchMove,
+      onMiddleTouchStart
     }
   }
 }
