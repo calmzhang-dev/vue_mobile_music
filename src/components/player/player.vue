@@ -1,5 +1,8 @@
 <template>
-    <div class="player">
+    <div
+      class="player"
+      v-show="playlist.length"
+    >
       <div
         class="normal-player"
         v-show="fullScreen"
@@ -89,6 +92,7 @@
           </div>
         </div>
       </div>
+      <miniPlayer :progress="progress" :toggle-play="togglePlay"></miniPlayer>
       <audio
       ref="audioRef"
       @pause="pause"
@@ -102,12 +106,13 @@
 
 <script>
 import { useStore } from 'vuex'
-import { computed, watch, ref } from 'vue'
+import { computed, watch, ref, nextTick } from 'vue'
 import useMode from './use-mode'
 import useFavorite from './use-favorite'
 import useCD from './use-cd'
 import useLyric from './use-lyric'
 import ProgressBar from './progress-bar'
+import miniPlayer from './mini-player'
 import Scroll from '../base/scroll/scroll.vue'
 import { formatTime } from '@/assets/js/util'
 import { PLAY_MODE } from '@/assets/js/constant'
@@ -117,13 +122,15 @@ export default {
   name: 'player',
   components: {
     ProgressBar,
-    Scroll
+    Scroll,
+    miniPlayer
   },
   setup () {
     // data===================
     const audioRef = ref(null)
     const songReady = ref(false)
     const currentTime = ref(0)
+    const barRef = ref(null)
     let progressChanging = false
 
     // vuex===================
@@ -182,6 +189,12 @@ export default {
       } else {
         audioEl.pause()
         stopLyric()
+      }
+    })
+    watch(fullScreen, async (newFullScreen) => {
+      await nextTick()
+      if (newFullScreen) {
+        barRef.value.setOffset(progress.value)
       }
     })
 
@@ -300,6 +313,7 @@ export default {
     }
     return {
       audioRef,
+      barRef,
       fullScreen,
       currentSong,
       currentTime,
@@ -319,6 +333,7 @@ export default {
       onPogressChanging,
       onPogressChanged,
       end,
+      playlist,
       // use-mode
       modeIcon,
       changeMode,
@@ -489,7 +504,7 @@ export default {
       }
       .bottom {
         position: absolute;
-        bottom: 50px;
+        bottom: 30px;
         width: 100%;
         .dot-wrapper {
           text-align: center;

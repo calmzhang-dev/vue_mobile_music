@@ -45,10 +45,9 @@ export default {
     }
   },
   watch: {
-    progress (progress) {
+    progress (newProgress) {
       // 进度条总宽度
-      const barWidth = this.$el.clientWidth - progressBtnWidth
-      this.offset = barWidth * progress
+      this.setOffset(newProgress)
     }
   },
   created () {
@@ -90,6 +89,12 @@ export default {
       const barWidth = this.$el.clientWidth - progressBtnWidth
       const progress = offsetWidth / barWidth
       this.$emit('pogress-changed', progress)
+    },
+
+    setOffset (progress) {
+      // 进度条总宽度
+      const barWidth = this.$el.clientWidth - progressBtnWidth
+      this.offset = barWidth * progress
     }
   }
 }
