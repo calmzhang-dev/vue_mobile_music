@@ -71,6 +71,7 @@ export default {
       }
     }
     .dots-wrapper {
+      display: flex;
       position: absolute;
       left: 50%;
       bottom: 12px;

@@ -504,7 +504,7 @@ export default {
       }
       .bottom {
         position: absolute;
-        bottom: 30px;
+        bottom: 15px;
         width: 100%;
         .dot-wrapper {
           text-align: center;
