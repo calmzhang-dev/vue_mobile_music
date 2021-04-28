@@ -57,7 +57,7 @@ export default function useMiniSlider () {
   })
   onUnmounted(() => {
     if (slider.value) {
-      slider.value.destory()
+      slider.value.destroy()
     }
   })
 
