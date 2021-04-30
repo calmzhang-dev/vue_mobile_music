@@ -7,6 +7,7 @@
           @click="hide"
         >
           <div class="list-wrapper" @click.stop>
+            <!-- 头部 -->
             <div class="list-header">
                 <h1 class="title">
                     <i
@@ -16,8 +17,13 @@
                     >
                     </i>
                     <span class="text">{{modeText}}</span>
+                    <!-- 清空 -->
+                    <span class="clear" @click="showConfirm">
+                      <i class="icon-clear"></i>
+                    </span>
                 </h1>
             </div>
+            <!-- 歌曲列表 -->
             <scroll ref="scrollRef" class="list-content" >
                 <transition-group ref="listRef" name="list" tag="ul">
                   <li class="item" v-for="song in sequenceList" :key="song.id" @click="selectItem(song)">
@@ -36,6 +42,12 @@
               <span>关闭</span>
             </div>
           </div>
+          <confirm
+            ref="confirmRef"
+            text="是否清空播放列表?"
+            confirmBtnText="清空"
+          >
+          </confirm>
         </div>
       </transition>
   </teleport>
@@ -43,6 +55,7 @@
 
 <script>
 import Scroll from '@/components/base/scroll/scroll'
+import Confirm from '@/components/base/confirm/confirm'
 import { ref, computed, nextTick, watch } from 'vue'
 import { useStore } from 'vuex'
 import useMode from './use-mode'
@@ -51,13 +64,15 @@ import useFavorite from './use-favorite'
 export default {
   name: 'playlist',
   components: {
-    Scroll
+    Scroll,
+    Confirm
   },
   setup () {
     const visible = ref(false)
     const scrollRef = ref(null)
     const listRef = ref(null)
     const removing = ref(false)
+    const confirmRef = ref(null)
 
     const store = useStore()
     const playlist = computed(() => store.state.playlist)
@@ -78,6 +93,10 @@ export default {
       scrolToCurrent()
     })
 
+    // 显示弹窗
+    function showConfirm () {
+      confirmRef.value.show()
+    }
     // 当前播放的歌
     function getCurrentIcon (song) {
       if (song.id === currentSong.value.id) {
@@ -143,6 +162,7 @@ export default {
       scrollRef,
       listRef,
       removing,
+      confirmRef,
       // vuex
       playlist,
       sequenceList,
@@ -154,6 +174,7 @@ export default {
       refreshScroll,
       selectItem,
       removeSong,
+      showConfirm,
       // useMode
       modeIcon,
       changeMode,
