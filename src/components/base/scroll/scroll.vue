@@ -13,13 +13,14 @@ export default {
   props: {
     click: {
       type: Boolean,
-      defalt: true
+      default: true
     },
     probeType: {
       type: Number,
       default: 0
     }
   },
+
   // 自定义事件vue3.0写法
   emits: ['scroll'],
   setup (props, { emit }) {
