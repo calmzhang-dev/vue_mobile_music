@@ -45,7 +45,7 @@
 import SongList from '@/components/base/song-list/song-list'
 import Scroll from '@/components/base/scroll/scroll'
 // 派发vuex数据利用Actions
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 const RESERVED_HEIGHT = 40
 
@@ -78,6 +78,9 @@ export default {
     }
   },
   computed: {
+    ...mapState([
+      'playlist'
+    ]),
     bgImageStyle () {
       const scrollY = this.scrollY
       let zIndex = 0
@@ -117,8 +120,10 @@ export default {
 
     // 根据图片计算歌曲列表定位高度
     scrollStyle () {
+      const bottom = this.playlist.length ? '60px' : '0'
       return {
-        top: `${this.imageHeight}px`
+        top: `${this.imageHeight}px`,
+        bottom: bottom
       }
     },
 

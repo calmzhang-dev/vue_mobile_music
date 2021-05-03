@@ -29,7 +29,7 @@
                   <li class="item" v-for="song in sequenceList" :key="song.id" @click="selectItem(song)">
                     <i class="current" :class="getCurrentIcon(song)" ></i>
                     <span class="text">{{song.name}}</span>
-                    <span class="favorite" @click.stop="toggleFavorite">
+                    <span class="favorite" @click.stop="toggleFavorite(song)">
                       <i :class="getFavoriteIcon(song)"></i>
                     </span>
                     <span class="delete" @click.stop="removeSong(song)" :class="{'disable' : removing}">
@@ -44,6 +44,7 @@
           </div>
           <confirm
             ref="confirmRef"
+            @confirm="confirmClear"
             text="是否清空播放列表?"
             confirmBtnText="清空"
           >
@@ -153,9 +154,17 @@ export default {
       }
       removing.value = true
       store.dispatch('removeSong', song)
+      if (!playlist.value.length) {
+        hide()
+      }
       setTimeout(() => {
         removing.value = false
       }, 300)
+    }
+
+    function confirmClear () {
+      store.dispatch('clearSongList')
+      hide()
     }
     return {
       visible,
@@ -175,6 +184,7 @@ export default {
       selectItem,
       removeSong,
       showConfirm,
+      confirmClear,
       // useMode
       modeIcon,
       changeMode,

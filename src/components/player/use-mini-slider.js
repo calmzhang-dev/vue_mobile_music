@@ -20,6 +20,7 @@ export default function useMiniSlider () {
 
   onMounted(() => {
     let sliderVal
+
     watch(sliderShow, async (newSliderShow) => {
       // 判断播放器以及歌曲是否展示(因为他们是v-show控制展示的,没有展示就没必要处理)
       if (newSliderShow) {
@@ -48,13 +49,15 @@ export default function useMiniSlider () {
         sliderVal.goToPage(currentIndex.value, 0, 0)
       }
     })
+
     watch(currentIndex, (newCurrentIndex) => {
       if (sliderVal && sliderShow.value) {
         sliderVal.goToPage(newCurrentIndex, 0, 0)
       }
     })
-    watch(playlist, async () => {
-      if (sliderVal && sliderShow.value) {
+
+    watch(playlist, async (newPLaylist) => {
+      if (sliderVal && sliderShow.value && newPLaylist.length) {
         await nextTick()
         sliderVal.refresh()
       }
