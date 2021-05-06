@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 
+// 字母导航
 export default function useShortcut (props, groupRef) {
   const ANCHOR_HEIGHT = 18
   const scrollRef = ref(null)

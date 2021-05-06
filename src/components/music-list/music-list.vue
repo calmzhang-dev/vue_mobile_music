@@ -29,7 +29,6 @@
       v-no-result:[noresultText]="onResult"
       :probe-type="3"
       @scroll="onScroll"
-      :click="true"
     >
       <div class="song-list-wrapper">
         <song-list
@@ -43,7 +42,7 @@
 
 <script>
 import SongList from '@/components/base/song-list/song-list'
-import Scroll from '@/components/base/scroll/scroll'
+import Scroll from '@/components/wrap-scroll/index'
 // 派发vuex数据利用Actions
 import { mapActions, mapState } from 'vuex'
 

@@ -7,9 +7,7 @@ export default {
   props: Scroll.props,
   emits: Scroll.emits,
   render (ctx) {
-    return h(Scroll, mergeProps({
-      ref: 'scrollRef'
-    }, ctx.$props, {
+    return h(Scroll, mergeProps({ ref: 'scrollRef' }, ctx.$props, {
       onScroll: (e) => {
         ctx.$emit('scroll', e)
       }

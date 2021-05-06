@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-      <transition>
+      <transition name="list-fade">
         <div
           class="playlist"
           v-show="visible && playlist.length"
