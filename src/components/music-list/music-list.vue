@@ -34,6 +34,7 @@
         <song-list
           :songs="songs"
           @select="selectItem"
+          :rank="rank"
         ></song-list>
       </div>
     </scroll>
@@ -67,7 +68,8 @@ export default {
     noresultText: {
       type: String,
       default: '抱歉,没有找到歌曲'
-    }
+    },
+    rank: Boolean
   },
   data () {
     return {
