@@ -1,5 +1,6 @@
 import { get } from './base'
 
+// 获取每首歌曲的url
 export function processSongs (songs) {
   if (!songs.length) {
     return Promise.resolve(songs)
@@ -12,6 +13,7 @@ export function processSongs (songs) {
   }).then((result) => {
     const map = result.map
     return songs.map((song) => {
+      // 拿到歌曲地址
       song.url = map[song.mid]
       return song
     }).filter((song) => {

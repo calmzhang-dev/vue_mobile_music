@@ -18,6 +18,9 @@ import MusicList from '@/components/music-list/music-list'
 
 export default {
   name: 'singer-detail',
+  props: {
+    singer: Object
+  },
   data () {
     return {
       songs: [],
@@ -47,9 +50,6 @@ export default {
       const singer = this.computedSinger
       return singer && singer.name
     }
-  },
-  props: {
-    singer: Object
   },
   async created () {
     // 如果修改地址刷新,就会返回null报错

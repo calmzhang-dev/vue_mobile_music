@@ -47,12 +47,15 @@ export function clearSongList ({ commit }) {
   commit('setPlayingState', false)
 }
 
+// 添加歌曲到歌曲列表
 export function addSong ({ commit, state }, song) {
   const playlist = state.playlist.slice()
   const sequenceList = state.sequenceList.slice()
   let currentIndex = state.currentIndex
+  // 查询播放列表是否存在当前歌曲
   const playIndex = findIndex(playlist, song)
 
+  // 大于-1歌曲存在
   if (playIndex > -1) {
     currentIndex = playIndex
   } else {

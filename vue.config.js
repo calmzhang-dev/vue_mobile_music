@@ -1,4 +1,4 @@
-const registerRouter  = require("./backend/router")
+const registerRouter = require('./backend/router')
 
 module.exports = {
   css: {
@@ -14,7 +14,7 @@ module.exports = {
   },
   // 启用一个nodesever服务器,利用webpack启用服务器
   devServer: {
-    before(app) {
+    before (app) {
       registerRouter(app)
     }
   }

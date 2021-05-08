@@ -607,7 +607,7 @@ function registerTopDetail(app) {
 }
 
 // 注册热门搜索接口
-function registerHotKeys(app) {
+function registerHotKeys (app) {
   app.get('/api/getHotKeys', (req, res) => {
     const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
 
@@ -635,7 +635,7 @@ function registerHotKeys(app) {
 }
 
 // 注册搜索查询接口
-function registerSearch(app) {
+function registerSearch (app) {
   app.get('/api/search', (req, res) => {
     const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
 
@@ -701,6 +701,7 @@ function registerSearch(app) {
         }
 
         const { curnum, curpage, totalnum } = songData
+        // 判断是否有多余数据
         const hasMore = 20 * (curpage - 1) + curnum < totalnum
 
         res.json({
