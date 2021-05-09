@@ -30,7 +30,7 @@
       :probe-type="3"
       @scroll="onScroll"
     >
-      <div class="song-list-wrapper" :style="boxshadow">
+      <div class="song-list-wrapper">
         <song-list
           :songs="songs"
           @select="selectItem"
@@ -140,16 +140,6 @@ export default {
       return {
         backdropFilter: `blur(${blur}px)`
       }
-    },
-    boxshadow () {
-      const scrollY = this.scrollY
-      if (scrollY > 0) {
-        console.log(123123)
-        return {
-          boxShadow: 'rgb(236,240,241, 0.4) 0px 0px 10px 5px'
-        }
-      }
-      return ''
     },
 
     onResult () {
