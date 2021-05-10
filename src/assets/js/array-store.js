@@ -55,6 +55,7 @@ export function clear (key) {
   return []
 }
 
+// 保存全部数据
 export function saveAll (items, key) {
   storage.set(key, items)
 }
