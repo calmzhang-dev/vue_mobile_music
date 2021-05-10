@@ -24,7 +24,7 @@
                 </h1>
             </div>
             <!-- 歌曲列表 -->
-            <scroll ref="scrollRef" class="list-content" >
+            <scroll ref="scrollRef" class="list-content">
                 <transition-group ref="listRef" name="list" tag="ul">
                   <li class="item" v-for="song in sequenceList" :key="song.id" @click="selectItem(song)">
                     <i class="current" :class="getCurrentIcon(song)" ></i>
@@ -38,6 +38,12 @@
                   </li>
                 </transition-group>
             </scroll>
+            <div class="list-add" @click="ShowAddSong">
+              <div class="add">
+                <i class="icon-add"></i>
+                <span class="text">添加歌曲到队列</span>
+              </div>
+            </div>
             <div class="list-footer" @click.stop="hide">
               <span>关闭</span>
             </div>
@@ -49,6 +55,7 @@
             confirmBtnText="清空"
           >
           </confirm>
+          <add-song ref="AddSongRef"></add-song>
         </div>
       </transition>
   </teleport>
@@ -57,6 +64,7 @@
 <script>
 import Scroll from '@/components/base/scroll/scroll'
 import Confirm from '@/components/base/confirm/confirm'
+import AddSong from '../add-song/add-song.vue'
 import { ref, computed, nextTick, watch } from 'vue'
 import { useStore } from 'vuex'
 import useMode from './use-mode'
@@ -66,7 +74,8 @@ export default {
   name: 'playlist',
   components: {
     Scroll,
-    Confirm
+    Confirm,
+    AddSong
   },
   setup () {
     const visible = ref(false)
@@ -74,6 +83,7 @@ export default {
     const listRef = ref(null)
     const removing = ref(false)
     const confirmRef = ref(null)
+    const AddSongRef = ref(null)
 
     const store = useStore()
     const playlist = computed(() => store.state.playlist)
@@ -166,12 +176,19 @@ export default {
       store.dispatch('clearSongList')
       hide()
     }
+
+    // 展示添加列表
+    function ShowAddSong () {
+      AddSongRef.value.show()
+    }
+
     return {
       visible,
       scrollRef,
       listRef,
       removing,
       confirmRef,
+      AddSongRef,
       // vuex
       playlist,
       sequenceList,
@@ -185,6 +202,7 @@ export default {
       removeSong,
       showConfirm,
       confirmClear,
+      ShowAddSong,
       // useMode
       modeIcon,
       changeMode,
@@ -219,6 +237,7 @@ export default {
       }
     }
     .list-wrapper {
+      border-radius: 10px;
       position: fixed;
       left: 0;
       bottom: 0;

@@ -3,8 +3,14 @@ import storage from 'good-storage'
 // 插入数组
 function insertArray (arr, item, compare, maxLen) {
   const index = arr.findIndex(compare)
-  if (index > -1) {
+  // 这里判断是为了实现最近播放功能
+  // 歌曲在队首
+  if (index === 0) {
     return
+  }
+  // 歌曲不在队首
+  if (index > 0) {
+    arr.splice(index, 1)
   }
   arr.unshift(item)
   if (maxLen && arr.length > maxLen) {

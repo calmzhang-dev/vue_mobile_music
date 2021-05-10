@@ -120,6 +120,7 @@ import useFavorite from './use-favorite'
 import useCD from './use-cd'
 import useLyric from './use-lyric'
 import useAnimation from './use-animation'
+import usePlayHistory from './use-play-history'
 import ProgressBar from './progress-bar'
 import miniPlayer from './mini-player'
 import Scroll from '../base/scroll/scroll.vue'
@@ -161,6 +162,7 @@ export default {
     const { currentLyric, currentLineNum, playLyric, lyricScrollRef, lyricListRef, stopLyric, pureMusicLyric, playinglyric } = useLyric({ songReady, currentTime })
     const { currentShow, middleLStyle, middleRStyle, onMiddleTouchEnd, onMiddleTouchMove, onMiddleTouchStart } = useMiddleInteractive()
     const { cdWrapperRef, leave, afterEnter, enter, afterLeave } = useAnimation()
+    const { savePlay } = usePlayHistory()
 
     // computed===============
     // 暂停按钮
@@ -277,6 +279,8 @@ export default {
       songReady.value = true
       // 当歌词先准备好，歌曲没准备好不会播放歌词，所以在这里判断歌曲准备好了再执行一次playLyric
       playLyric()
+      // 添加到最近播放
+      savePlay(currentSong.value)
     }
 
     // 如果是歌曲错误时,将是否准备好歌曲的变量songReady改为true,让他可以切换下一首歌
@@ -309,7 +313,6 @@ export default {
 
     function end () {
       currentTime.value = 0
-      console.log(111)
       if (playMode.value === PLAY_MODE.loop) {
         loop()
       } else {

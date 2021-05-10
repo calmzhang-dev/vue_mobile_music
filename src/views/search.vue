@@ -22,6 +22,7 @@
                     </li>
                 </ul>
             </div>
+            <!-- 搜索历史 -->
             <div class="search-history" v-show="searchHistory.length">
               <h1 class="title">
                 <span class="text">搜索历史</span>
@@ -29,12 +30,14 @@
                   <i class="icon-clear"></i>
                 </span>
               </h1>
+              <!-- 弹框 -->
               <confirm
                 ref="confirmRef"
                 text="是否清空所有搜索历史"
                 confirmBtnText="清空"
                 @confirm="clearSearch"
               ></confirm>
+              <!-- 搜索历史列表 -->
               <search-list
                 :searches="searchHistory"
                 @select="addQuery"
