@@ -25,5 +25,5 @@ module.exports = {
   //   }
   // }
   productionSourceMap: false,
-  publicPath: process.env.NODE_ENV === 'production' ? '/vue_shop/dist/' : '/'
+  publicPath: process.env.NODE_ENV === 'production' ? '/vue_mobile_music/dist/' : '/'
 }
