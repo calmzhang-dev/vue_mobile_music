@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch, nextTick, onActivated, onDeactivated } from 'vue'
 import { useStore } from 'vuex'
 import BScroll from '@better-scroll/core'
 import Slide from '@better-scroll/slide'
@@ -68,7 +68,16 @@ export default function useMiniSlider () {
       slider.value.destroy()
     }
   })
-
+  // keep-active路由缓存钩子
+  onActivated(() => {
+    // 启动better-scroll
+    scroll.value.enable()
+    scroll.value.refresh()
+  })
+  onDeactivated(() => {
+    // 禁用better-scroll
+    scroll.value.disable()
+  })
   return {
     sliderWrapperRef,
     slider

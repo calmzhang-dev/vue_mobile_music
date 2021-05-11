@@ -1,7 +1,7 @@
 import BScroll from '@better-scroll/core'
 import PullUp from '@better-scroll/pull-up'
 import ObserveDOM from '@better-scroll/observe-dom'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, onDeactivated, onActivated } from 'vue'
 
 // 注册插件
 BScroll.use(PullUp)
@@ -35,6 +35,16 @@ export default function usePullUpLoad (requestData, preventPullUpLoad) {
 
   onUnmounted(() => {
     scroll.value.destroy()
+  })
+  // keep-active路由缓存钩子
+  onActivated(() => {
+    // 启动better-scroll
+    scroll.value.enable()
+    scroll.value.refresh()
+  })
+  onDeactivated(() => {
+    // 禁用better-scroll
+    scroll.value.disable()
   })
 
   return {
