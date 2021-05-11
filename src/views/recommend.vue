@@ -4,14 +4,14 @@
       <scroll class="recommend-content">
       <!-- scroll只对第一个根元素滚动,所以加一个div包裹 -->
         <div>
-          <!-- 轮播图 -->
-          <div class="slider-wrapper">
+            <!-- 轮播图 -->
+            <div class="slider-wrapper">
               <div class="slider-content">
                   <slider v-if="sliders.length" :sliders="sliders"></slider>
               </div>
-          </div>
-          <!-- 推荐歌单 -->
-          <div class="recommend-list">
+            </div>
+            <!-- 推荐歌单 -->
+            <div class="recommend-list">
            <h1 class="list-title" v-show="!loading" :v-show="loading">热门歌单推荐</h1>
            <ul>
              <li
@@ -33,7 +33,7 @@
                </div>
              </li>
            </ul>
-          </div>
+            </div>
         </div>
       </scroll>
       <router-view v-slot="{ Component }">

@@ -3,7 +3,7 @@
     <m-header></m-header>
     <tab></tab>
     <router-view :style="viewStyle" v-slot="{ Component }">
-      <keep-alive>
+        <keep-alive>
           <component :is="Component"/>
         </keep-alive>
     </router-view>
